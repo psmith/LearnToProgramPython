@@ -58,3 +58,41 @@ class TestA3(unittest.TestCase):
         
     def test_ten_letter_word_scores_30(self):
         self.assertEquals(30, a3.word_score('ARMADILLOS'))
+        
+    def test_scoring_a_players_no_point_word(self):
+        playerinfo = ['Jonathan', 4]
+        word = 'AT'
+        a3.update_score(playerinfo, word)
+        self.assertEqual(4, playerinfo[1])
+        
+    def test_scoring_a_players_3_point_word(self):
+        playerinfo = ['Jonathan', 4]
+        word = 'ANT'
+        a3.update_score(playerinfo, word)
+        self.assertEqual(7, playerinfo[1])
+        
+    def test_num_words_on_board_should_find_3(self):
+        board = [['A', 'N', 'T', 'T'], ['X', 'S', 'O', 'B']]
+        words = ['ANT', 'BOX', 'SOB', 'TO']
+        numberOfWordsFound = a3.num_words_on_board(board, words)
+        self.assertEquals(3, numberOfWordsFound)
+        
+    def test_num_words_on_board_should_find_0(self):
+        board = [['A', 'N', 'T', 'T'], ['X', 'S', 'O', 'B']]
+        words = ['BOXES']
+        numberOfWordsFound = a3.num_words_on_board(board, words)
+        self.assertEquals(0, numberOfWordsFound)
+        
+    def test_get_word_list_contains_CRUNCHY_COWS_EAT_GRASS(self):
+        word_list = ['CRUNCHY','COWS','EAT', 'GRASS']
+        self.assertEquals(word_list, a3.read_words(open('wordlist1.txt', 'r')))
+    
+    def test_get_board_contains_specified_board(self):
+        board_list = [['E','F','J','A','J','C','O','W','S','S'],
+                      ['S','D','G','K','S','R','F','D','F','F'],
+                      ['A','S','R','J','D','U','S','K','L','K'],
+                      ['H','E','A','N','D','N','D','J','W','A'],
+                      ['A','N','S','D','N','C','N','E','O','P'],
+                      ['P','M','S','N','F','H','H','E','J','E'],
+                      ['J','E','P','Q','L','Y','N','X','D','L']]
+        self.assertEquals(board_list, a3.read_board(open('board1.txt', 'r')))
